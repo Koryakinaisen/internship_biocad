@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const devices = require('./json/devices.json')
-const {getDeviceHTML} = require("./html_functions");
+const {getDeviceHTML, getDeviceAnalyticsHTML} = require("./html_functions");
 
 const contentType = {
     '.html': 'text/html',
@@ -39,7 +39,14 @@ const main = http.createServer((req, res) => {
 
         req.on('end', () => {
             const receivedParams = JSON.parse(body);
-            devices[receivedParams.device_id].notification = !devices[receivedParams.device_id].notification
+            let device
+            for (let i=0; i < devices.length; i++){
+                if (devices[i].id === receivedParams.device_id) {
+                    device = devices[i]
+                    break
+                }
+            }
+            device.notification = !device.notification
             res.statusCode = 200;
             res.setHeader('Content-Type', 'text/plain');
             res.end('Параметры получены!');
@@ -59,6 +66,12 @@ const main = http.createServer((req, res) => {
             res.setHeader('Content-Type', 'text/plain');
             res.end('Параметры получены!');
         });
+        return
+    } else if(req.url === '/device-analytics') {
+        const device = devices[0]
+        const html = getDeviceAnalyticsHTML(device)
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.end(html)
         return
     } else {
             filePath = './public' + req.url;

@@ -1,8 +1,8 @@
-function AJAXGet(url) {
+function AJAXGet(url, callBack) {
     const xhttp = new XMLHttpRequest()  //асинхронный запрос
     xhttp.onreadystatechange = function() {
         if (xhttp.readyState === 4 && this.status === 200) {    //4 - обработка запроса завершена, 200 - успешная обработка запроса
-            updateFavoriteDevices(this.responseText)     //responseText - ответ от сервера
+            callBack(this.responseText)     //responseText - ответ от сервера
         }
     }
     xhttp.open('GET', url, true)
@@ -22,7 +22,7 @@ function AJAXPost(url, params) {
 }
 
 function updateFavoriteDevices(responceText) {
-    const favoriteDevices = document.getElementById("favorite-devices-block")
+    const favoriteDevices = document.getElementById('favorite-devices-block')
     const firstChild = favoriteDevices.firstElementChild.outerHTML
     while (favoriteDevices.firstChild) {
         favoriteDevices.removeChild(favoriteDevices.firstChild)
@@ -31,8 +31,20 @@ function updateFavoriteDevices(responceText) {
     favoriteDevices.innerHTML += responceText
 }
 
-function onLoad() {
-    AJAXGet('/favorite-devices')
+function updateDeviceAnalytics(responceText) {
+    const deviceAnalytics = document.getElementById('device-analytics-container')
+    while (deviceAnalytics.firstChild) {
+        deviceAnalytics.removeChild(deviceAnalytics.firstChild)
+    }
+    deviceAnalytics.innerHTML = responceText
+}
+
+function onLoadMainPage() {
+    AJAXGet('/favorite-devices', updateFavoriteDevices)
+}
+
+function onLoadAnalyticsPage() {
+    AJAXGet('/device-analytics', updateDeviceAnalytics)
 }
 
 function changeNotification(event) {
@@ -49,4 +61,16 @@ function changeStatus(event) {
     const params = `{ "device_id": ${ deviceId }, "status": "${ selectedText }"}`
     console.log(params)
     AJAXPost('/change-status', params)
+}
+
+function openDeviceWorks() {
+    const deviceWorks = document.getElementById('device-works')
+    const openerButton = document.getElementById('device-analytics-content-opener-button')
+    if (deviceWorks.hasAttribute('hidden')) {
+        deviceWorks.removeAttribute('hidden')
+        openerButton.style.rotate = '360deg'
+    } else {
+        deviceWorks.setAttribute('hidden', 'hidden')
+        openerButton.style.rotate = '-90deg'
+    }
 }
