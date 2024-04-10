@@ -8,7 +8,8 @@
   <title>Botanique</title>
   <link href="css/styles.css" rel="stylesheet">
 </head>
-<body>
+
+<body onload="onLoad()">
   <header class="header">
     <div class="header-container">
       <img class="header-logo" src="images/header/logo.svg" alt="logo">
@@ -19,7 +20,7 @@
         </div>
 
         <div class="header-nav-link">
-          <a href="analytics.html">АНАЛИТИКА</a>
+          <a href="/analytics">АНАЛИТИКА</a>
         </div>
       </nav>
 
@@ -50,11 +51,16 @@
           <h2>Любимые приборы</h2>
         </div>
 
-        <section class="favorite-devices-block">
-
+        <section id="favorite-devices-block">
+          <div class="favorite-devices-block-header">
+            <span class="favorite-devices-block-header-name">Название</span>
+            <span class="favorite-devices-block-header-status">Статус</span>
+          </div>
         </section>
       </div>
     </article>
   </main>
+
+  <script src="./js/devices.js"></script>
 </body>
 </html>
