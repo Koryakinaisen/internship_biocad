@@ -306,7 +306,7 @@ body {
     align-items: center;
 }
 
-.device-analytics-loader img {
+.device-analytics-loader > img {
     width: 40px;
     height: 40px;
 }
@@ -322,6 +322,15 @@ body {
     line-height: 16px;
     letter-spacing: 1.25px;
     padding: 12px 16px;
+}
+
+.device-analytics-pdf {
+    display: flex;
+    align-items: center;
+}
+
+.device-analytics-pdf img {
+    margin-left: 10px;
 }
 
 .device-analytics-date {

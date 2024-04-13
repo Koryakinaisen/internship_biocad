@@ -149,7 +149,11 @@ function getDeviceAnalyticsHTML(device, daysInterval = 0) {
           
           <div class="device-analytics-loader">
             <img src="images/icons/clock.svg" alt="clock">
-            <a href="" class="device-analytics-pdf">СОХРАНИТЬ PDF | :</a>
+            <a href="#" class="device-analytics-pdf">
+              СОХРАНИТЬ PDF
+              <img src="images/icons/pdf_line.svg" alt="line">
+              <img src="images/icons/ellipsis.svg" alt="ellipsis">
+            </a>
           </div>
         </div>
         
