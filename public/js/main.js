@@ -63,7 +63,7 @@ function changeStatus(event) {
     AJAXPost('/change-status', params)
 }
 
-function openDeviceWorks() {
+function closeDeviceWorks() {
     const deviceWorks = document.getElementById('device-works')
     const openerButton = document.getElementById('device-analytics-content-opener-button')
     if (deviceWorks.hasAttribute('hidden')) {

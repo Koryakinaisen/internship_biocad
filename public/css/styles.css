@@ -298,10 +298,6 @@ body {
     cursor: pointer;
 }
 
-#device-analytics-content-opener-button {
-    rotate: -90deg;
-}
-
 .device-analytics-loader {
     width: 253px;
     height: 40px;
@@ -422,10 +418,24 @@ input[type="radio"]:checked + label {
     width: 486px;
     padding: 12px;
 }
+
 .device-analytics-works-result,
 .device-analytics-works-user {
     width: 140px;
     padding: 12px;
+    position: relative;
+}
+
+.works-result-container {
+    width: 100px;
+    float: left;
+}
+
+.device-analytics-works-result img {
+    position: absolute;
+    top: 12px;
+    left: 114px;
+    padding: 4.67px 2.83px;
 }
 
 .device-work {
@@ -433,5 +443,17 @@ input[type="radio"]:checked + label {
     height: 125px;
     border-bottom: 1px solid rgba(33, 33, 33, 0.08);
     display: flex;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+}
 
+/* Error page */
+
+.error-page {
+    width: 800px;
+    margin: 48px auto 0;
+    font-weight: bold;
+    font-size: 28px;
 }

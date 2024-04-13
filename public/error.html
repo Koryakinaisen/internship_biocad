@@ -1,10 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Botanique</title>
+  <link href="css/styles.css" rel="stylesheet">
 </head>
-<body>
 
+<body onload="onLoadMainPage()">
+<header class="header">
+  <div class="header-container">
+    <img class="header-logo" src="images/header/logo.svg" alt="logo">
+
+    <nav class="header-nav">
+      <div class="header-nav-link">
+        <a href="/">ГЛАВНАЯ</a>
+      </div>
+
+      <div class="header-nav-link">
+        <a href="/analytics">АНАЛИТИКА</a>
+      </div>
+    </nav>
+
+    <a href="/user">
+      <img src="images/header/user.svg" alt="user">
+    </a>
+  </div>
+</header>
+
+<div class="error-page">К сожалению, запрашиваемой страницы не существует.</div>
 </body>
 </html>

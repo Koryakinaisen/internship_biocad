@@ -10,57 +10,57 @@
 </head>
 
 <body onload="onLoadMainPage()">
-  <header class="header">
-    <div class="header-container">
-      <img class="header-logo" src="images/header/logo.svg" alt="logo">
+<header class="header">
+  <div class="header-container">
+    <img class="header-logo" src="images/header/logo.svg" alt="logo">
 
-      <nav class="header-nav">
-        <div class="header-nav-link active">
-          <a href="">ГЛАВНАЯ</a>
-        </div>
+    <nav class="header-nav">
+      <div class="header-nav-link active">
+        <a href="">ГЛАВНАЯ</a>
+      </div>
 
-        <div class="header-nav-link">
-          <a href="/analytics">АНАЛИТИКА</a>
-        </div>
-      </nav>
+      <div class="header-nav-link">
+        <a href="/analytics">АНАЛИТИКА</a>
+      </div>
+    </nav>
 
-      <a href="/user">
-        <img src="images/header/user.svg" alt="user">
-      </a>
+    <a href="/user">
+      <img src="images/header/user.svg" alt="user">
+    </a>
+  </div>
+</header>
+
+<main>
+  <article class="search-string">
+    <div class="search-string-container">
+      <form class="search-string-container-form">
+        <label>
+          <input type="text" class="search-string-input"
+                 placeholder="Поиск прибора в Botanique по номеру, названию, подразделению и др.">
+        </label>
+      </form>
+
+      <img class="qr-scanner" src="images/icons/qr_code_scanner.svg" alt="qr-scanner">
     </div>
-  </header>
+  </article>
 
-  <main>
-    <article class="search-string">
-      <div class="search-string-container">
-        <form class="search-string-container-form">
-          <label>
-            <input type="text" class="search-string-input"
-                   placeholder="Поиск прибора в Botanique по номеру, названию, подразделению и др.">
-          </label>
-        </form>
-
-        <img class="qr-scanner" src="images/icons/qr_code_scanner.svg" alt="qr-scanner">
+  <article class="favorite-devices">
+    <div class="favorite-devices-container">
+      <div class="favorite-devices-title">
+        <img class="heart" src="images/icons/heart.svg" alt="heart">
+        <h2>Любимые приборы</h2>
       </div>
-    </article>
 
-    <article class="favorite-devices">
-      <div class="favorite-devices-container">
-        <div class="favorite-devices-title">
-          <img class="heart" src="images/icons/heart.svg" alt="heart">
-          <h2>Любимые приборы</h2>
+      <section id="favorite-devices-block">
+        <div class="favorite-devices-block-header">
+          <span class="favorite-devices-block-header-name">Название</span>
+          <span class="favorite-devices-block-header-status">Статус</span>
         </div>
+      </section>
+    </div>
+  </article>
+</main>
 
-        <section id="favorite-devices-block">
-          <div class="favorite-devices-block-header">
-            <span class="favorite-devices-block-header-name">Название</span>
-            <span class="favorite-devices-block-header-status">Статус</span>
-          </div>
-        </section>
-      </div>
-    </article>
-  </main>
-
-  <script src="./js/devices.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
