@@ -37,6 +37,7 @@ function updateDeviceAnalytics(responceText) {
         deviceAnalytics.removeChild(deviceAnalytics.firstChild)
     }
     deviceAnalytics.innerHTML = responceText
+    addEventListenersForRadioInputs()
 }
 
 function onLoadMainPage() {
@@ -59,7 +60,6 @@ function changeStatus(event) {
     const selectedText = selectStatus.options[selectedIndex].text
     const deviceId = selectStatus.parentElement.dataset.deviceId
     const params = `{ "device_id": ${ deviceId }, "status": "${ selectedText }"}`
-    console.log(params)
     AJAXPost('/change-status', params)
 }
 
@@ -73,4 +73,46 @@ function openDeviceWorks() {
         deviceWorks.setAttribute('hidden', 'hidden')
         openerButton.style.rotate = '-90deg'
     }
+}
+
+function addEventListenersForRadioInputs() {
+    const radioInputs = document.querySelectorAll('input[type="radio"]');
+    radioInputs.forEach(input => {
+        input.addEventListener('change', function () {
+            if (this.checked) {
+                const selectedValue = this.value;
+                let timeInterval
+                switch (selectedValue) {
+                    case 'day':
+                        timeInterval = 1
+                        break
+                    case 'week':
+                        timeInterval = 7
+                        break
+                    case 'two-weeks':
+                        timeInterval = 14
+                        break
+                    case 'month':
+                        timeInterval = 31
+                        break
+                    case 'three-months':
+                        timeInterval = 93
+                        break
+                    case 'half-year':
+                        timeInterval = 186
+                        break
+                    default:
+                        timeInterval = 14
+                }
+                AJAXGet(`/get-works?time-interval=${timeInterval}`, function (responseText) {
+                    const deviceWorks = document.getElementById('device-analytics-works-content')
+                    console.log(responseText)
+                    const res = JSON.parse(responseText)
+                    deviceWorks.innerHTML = res.html
+                    const pastDateContainer = document.getElementById('past-date-container-text')
+                    pastDateContainer.innerHTML = res.date_text
+                })
+            }
+        });
+    });
 }

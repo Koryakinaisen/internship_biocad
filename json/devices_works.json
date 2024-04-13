@@ -2,8 +2,14 @@
   {
     "device_id": 0,
     "user_id": 0,
-    "start_date": "09.10.2021, 15:46",
-    "end_date": "",
+    "start_date": {
+      "date": 9,
+      "monthIndex": 2,
+      "year": 2024,
+      "hours": 15,
+      "minutes": 46
+    },
+    "end_date": {},
     "work_type": "Измерение",
     "works": [
       {
@@ -16,8 +22,14 @@
   {
     "device_id": 0,
     "user_id": 0,
-    "start_date": "12.10.2021, 12:17",
-    "end_date": "",
+    "start_date": {
+      "date": 12,
+      "monthIndex": 3,
+      "year": 2024,
+      "hours": 12,
+      "minutes": 17
+    },
+    "end_date": {},
     "work_type": "Калибровка",
     "works": [
       {

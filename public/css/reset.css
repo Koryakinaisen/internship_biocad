@@ -86,3 +86,7 @@ label {
 legend {
     display: block;
 }
+
+input[type="radio"] {
+    display: none;
+}

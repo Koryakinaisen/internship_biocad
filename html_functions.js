@@ -26,19 +26,94 @@ function getDeviceHTML(device) {
     `
 }
 
-function getDeviceWorkHTML(device_work) {
+function getWorksHTML(works) {
+    let html = ''
+    works.forEach(function (work) {
+        html += `
+            <div class="work-container">
+              <span  class="work-name">${ work.name }:</span>
+              <span class="work-content">${ work.content }</span>
+            </div>
+        `
+    })
+    return html
+}
+
+function getDeviceWorkHTML(deviceWork) {
+    const startDateJson = deviceWork.start_date
+    const startDate = new Date(startDateJson.year, startDateJson.monthIndex,
+        startDateJson.date, startDateJson.hours, startDateJson.minutes)
+    let userNickname
+    users.forEach(function (user) {
+        if (user.id === deviceWork.user_id) {
+            userNickname = user.nickname
+        }
+    })
+    const worksHTML = getWorksHTML(deviceWork.works)
     return `
         <div class="device-work">
-          ${ device_work.start_date }
+          <div class="device-analytics-works-start">
+            ${ getDate(startDate) }
+          </div>
+          <div class="device-analytics-works-type">
+            ${ deviceWork.work_type?'В работе':'Не в работе' }
+            ${ deviceWork.work_type}
+          </div>
+          <div class="device-analytics-works-works">
+            ${ worksHTML }
+          </div>
+          <div class="device-analytics-works-result">
+            ${ deviceWork.result }
+          </div>
+          <div class="device-analytics-works-user">
+            ${ userNickname }
+          </div>
         </div>
     `
 }
 
-function getDeviceAnalyticsHTML(device) {
+function getDeviceWorksHTML(device, daysInterval) {
+    const currentDate = new Date()
+    const pastDate = new Date()
+    pastDate.setDate(currentDate.getDate() - daysInterval)
     const deviceWorks = []
     for(let i=0; i<devicesWorks.length; i++) {
-        if (devicesWorks[i].device_id === device.id) deviceWorks.push(devicesWorks[i])
+        if (devicesWorks[i].device_id === device.id && cmpDates(pastDate, devicesWorks[i].start_date))
+            deviceWorks.push(devicesWorks[i])
     }
+    let html = ''
+    deviceWorks.forEach(function (deviceWork) {
+        html += getDeviceWorkHTML(deviceWork)
+    })
+    return html
+}
+
+function getDate(currentDate) {
+    let date = ''
+    date += currentDate.toISOString().slice(0,10).split('-').reverse().join('.') + ', '
+    const hours = currentDate.getHours()
+    const minutes = currentDate.getMinutes()
+    if(hours < 10) date += '0'
+    date += hours + ':'
+    if(minutes < 10) date += '0'
+    date += minutes
+    return date
+}
+
+function cmpDates(pastDate, startDateJson) {
+    const startDate = new Date(startDateJson.year, startDateJson.monthIndex,
+        startDateJson.date, startDateJson.hours, startDateJson.minutes)
+    return startDate.getTime() - pastDate.getTime() >= 0
+}
+
+function getDeviceAnalyticsHTML(device, daysInterval=0) {
+    const currentDate = new Date()
+    const currentDateStr = getDate(currentDate)
+    const pastDate = new Date()
+    pastDate.setDate(currentDate.getDate() - daysInterval)
+    const pastDateStr = getDate(pastDate)
+    console.log(pastDateStr)
+
     let html = ""
     html += `
         <div class="device-analytics-header">
@@ -77,12 +152,64 @@ function getDeviceAnalyticsHTML(device) {
         </div>
         
         <div id="device-works" hidden>
+          <div class="device-analytics-date">
+            <div class="device-analytics-date-container" class="past-date-container">
+              <span id="past-date-container-text">${ pastDateStr }</span>
+              <img src="images/icons/calendar.svg" alt="calendar">
+            </div>
+            
+            <div class="device-analytics-date-arrow">
+              <img src="images/icons/arrow.svg" alt="arrow">
+            </div>
+            
+            <div class="device-analytics-date-container">
+              ${ currentDateStr }
+              <img src="images/icons/calendar.svg" alt="calendar">
+            </div>
+          </div>
+         
+          <div class="device-analytics-time-interval">
+            <form onchange="">
+              <input type="radio" name="time-interval" id="day" value="day">
+              <label for="day">День</label>
+              <input type="radio" name="time-interval" id="week" value="week">
+              <label for="week">Неделя</label>
+              <input type="radio" name="time-interval" id="two-weeks" value="two-weeks">
+              <label for="two-weeks">2 недели</label>
+              <input type="radio" name="time-interval" id="month" value="month">
+              <label for="month">Месяц</label>
+              <input type="radio" name="time-interval" id="three-months" value="three-months">
+              <label for="three-months">3 месяца</label>
+              <input type="radio" name="time-interval" id="half-year" value="half-year">
+              <label for="half-year">Полгода</label>
+            </form>
+          </div>
+          
+          <div class="device-analytics-works">
+            <div class="device-analytics-works-header">
+              <div class="device-analytics-works-start">
+                Начало
+              </div>
+              <div class="device-analytics-works-type">
+                Тип работы
+              </div>
+              <div class="device-analytics-works-works">
+                Работы
+              </div>
+              <div class="device-analytics-works-result">
+                Результат
+              </div>
+              <div class="device-analytics-works-user">
+                Пользователь
+              </div>
+            </div>
+            <div id="device-analytics-works-content">
+            
+            </div>
+          </div>
+        </div>
     `
-    for(let i=0; i<deviceWorks.length; i++){
-        html += getDeviceWorkHTML(deviceWorks[i])
-    }
-    html += '</div>'
     return html
 }
 
-module.exports = {getDeviceHTML, getDeviceAnalyticsHTML}
+module.exports = {getDeviceHTML, getDeviceAnalyticsHTML, getDeviceWorksHTML, getDate}

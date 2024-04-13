@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const devices = require('./json/devices.json')
-const {getDeviceHTML, getDeviceAnalyticsHTML} = require("./html_functions");
+const {getDeviceHTML, getDeviceAnalyticsHTML, getDeviceWorksHTML, getDate} = require("./html_functions");
 
 const contentType = {
     '.html': 'text/html',
@@ -16,6 +16,7 @@ const contentType = {
 
 const main = http.createServer((req, res) => {
     let filePath = ''
+    let regexPattern = /\/get-works\?time-interval=\d+/ // Регулярное выражения для проверки url
 
     if (req.url === '/') {
         filePath = './public/main.html'
@@ -72,6 +73,21 @@ const main = http.createServer((req, res) => {
         const html = getDeviceAnalyticsHTML(device)
         res.writeHead(200, { 'Content-Type': 'text/html' })
         res.end(html)
+        return
+    } else if(regexPattern.test(req.url)) {
+        const daysInterval = req.url.match(/time-interval=(\d+)/)[1]
+        const device = devices[0]
+        const html = getDeviceWorksHTML(device, daysInterval)
+        const pastDate = new Date()
+        pastDate.setDate(pastDate.getDate() - daysInterval)
+        const dateText = getDate(pastDate)
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        const json = JSON.stringify({
+            'html': html,
+            'date_text': dateText
+        })
+        console.log(json)
+        res.end(json)
         return
     } else {
             filePath = './public' + req.url;
